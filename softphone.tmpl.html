@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Operata Softphone</title>
+    <meta charset="utf-8" />
+
+    <script src="/static/js/connect-rtc-<%= CONNECT_RTC_VERSION %>.min.js"></script>
+    <script src="/static/js/connect-streams-<%= CONNECT_STREAMS_VERSION %>.js"></script>
+    <script src="<%= OPERATA_STATIC_SERVER %>/operata.js"></script>
+</head>
+
+<body>
+
+<!-- audio tag to connect customer voice -->
+<audio id="remote-audio" autoplay></audio>
+
+<div class="container" style="display: none;">
+    <!-- softphone iframe is injected here-->
+    <div id="softphone"></div>
+</div>
+
+<!-- section-login-button. this is optional -->
+<div class="login-container">
+    <a id="loginButton" href="#" onclick="showLoginPopup()">Login</a>
+</div>
+
+</body>
+
+<script>
+
+    const operataOptions = {
+        operataAPIServer: '<%= OPERATA_API_SERVER %>',
+        operataStaticServer: '<%= OPERATA_STATIC_SERVER %>',
+        operataGroupID: '<%= OPERATA_GROUP_ID %>',
+        operataGroupSecret: '<%= OPERATA_GROUP_SECRET %>',
+        awsCCPUrl: '<%= GROUP_CCP_URL %>',
+        loadSoftphone: <%= LOAD_SOFTPHONE %>,
+        loadAgentAssist: <%= LOAD_AGENT_ASSIST %>,
+    };
+
+    //initialise operata
+    Operata(operataOptions).then(() => {
+        console.log("Loaded Operata Softphone");
+    }).catch((err) => {
+        console.error(err);
+    });
+</script>
+
+</html>
